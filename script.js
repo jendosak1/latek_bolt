@@ -19,7 +19,8 @@ const COMPANY = {
   addressEn: "Bulgaria, Burgas, 8000, 10 Apostol Karamitev St., floor 5, office 13",
   phone: "+359876896776",
   email: "mail@latek-sol.com",
-  domain: "latek-sol.com"
+  domain: "latek-sol.com",
+  year: "2024"
 };
 
 const MEDICAL_DISCLAIMER = {
@@ -58,8 +59,8 @@ const I18N = {
       eyebrow: "B2B HealthTech платформа",
       title: "Дистанционен мониторинг на здравето",
       lead:
-        "Цифрова платформа за наблюдение на здравни показатели, структуриране на данни и подпомагане на медицинските екипи при дистанционна работа с пациенти.",
-      imageAlt: "Медицински специалист работи с цифров интерфейс за дистанционен мониторинг"
+        "Цифрова платформа за наблюдение на здравни показатели и структуриране на пациентски данни. Подпомага медицинските екипи при дистанционна работа с пациенти.",
+      imageAlt: "Медицински специалист работи с цифров интерфейс за дистанционен мониторинг на здравни показатели"
     },
     platform: {
       eyebrow: "Какво прави платформата",
@@ -114,17 +115,19 @@ const I18N = {
     },
     contact: {
       eyebrow: "Контакт",
-      title: "Свържете се с LATECH SOLUTION Ltd",
+      title: "Свържете се с ЛАТЕК СОЛЮШЪН",
       text: "За демонстрация, пилотен проект или партньорски разговор използвайте телефон, Viber или email.",
       phone: "Телефон / Viber",
-      email: "Email"
+      email: "Email",
+      cta: "Заявете демонстрация"
     },
     footer: {
       text: "Дигитална платформа за дистанционен мониторинг на здравето и структуриране на пациентски данни.",
       privacy: "Поверителност",
       cookies: "Бисквитки",
       legal: "Правна информация",
-      rights: "Всички права запазени."
+      rights: "Всички права запазени.",
+      madeIn: "Изработено в България"
     }
   },
   en: {
@@ -157,7 +160,7 @@ const I18N = {
       eyebrow: "B2B HealthTech platform",
       title: "Remote Health Monitoring",
       lead:
-        "A digital platform for monitoring health indicators, structuring patient data, and supporting healthcare teams in remote patient management.",
+        "A digital platform for monitoring health indicators and structuring patient data. Supports healthcare teams in remote patient management.",
       imageAlt: "Healthcare professional using a digital remote health monitoring interface"
     },
     platform: {
@@ -214,16 +217,18 @@ const I18N = {
     contact: {
       eyebrow: "Contact",
       title: "Contact LATECH SOLUTION Ltd",
-      text: "For a demo, pilot, or partnership conversation, use phone, Viber, or email.",
+      text: "For a demo, pilot, or partnership conversation, reach us via phone, Viber, or email.",
       phone: "Phone / Viber",
-      email: "Email"
+      email: "Email",
+      cta: "Request a demo"
     },
     footer: {
       text: "A digital platform for remote health monitoring and patient data structuring.",
       privacy: "Privacy Policy",
       cookies: "Cookie Policy",
       legal: "Legal Notice",
-      rights: "All rights reserved."
+      rights: "All rights reserved.",
+      madeIn: "Made in Bulgaria"
     }
   }
 };
@@ -496,13 +501,17 @@ function updateSeo(lang, page) {
   const title = pageData.title || t.seo.title;
   const description = pageData.description || t.seo.description;
   const currentPath = getPagePath(lang, page);
+  const fullUrl = `https://${COMPANY.domain}${currentPath}`;
 
   document.documentElement.lang = lang;
   document.title = title;
   setMetaAttribute('meta[name="description"]', "content", description);
   setMetaAttribute('meta[property="og:title"]', "content", title);
   setMetaAttribute('meta[property="og:description"]', "content", description);
-  setMetaAttribute('link[rel="canonical"]', "href", `https://${COMPANY.domain}${currentPath}`);
+  setMetaAttribute('meta[property="og:url"]', "content", fullUrl);
+  setMetaAttribute('meta[name="twitter:title"]', "content", title);
+  setMetaAttribute('meta[name="twitter:description"]', "content", description);
+  setMetaAttribute('link[rel="canonical"]', "href", fullUrl);
   setMetaAttribute('link[rel="alternate"][hreflang="bg"]', "href", `https://${COMPANY.domain}${getPagePath("bg", page)}`);
   setMetaAttribute('link[rel="alternate"][hreflang="en"]', "href", `https://${COMPANY.domain}${getPagePath("en", page)}`);
   setMetaAttribute('link[rel="alternate"][hreflang="x-default"]', "href", `https://${COMPANY.domain}${getPagePath("bg", page)}`);
@@ -597,8 +606,8 @@ function renderFooter(lang, page) {
       ${createLanguageSwitcher(lang, page, "language-switcher--footer")}
 
       <div class="site-footer__legal">
-        <p>© 2026 ${t.brand}. ${t.footer.rights}</p>
-        <p>EIK/PIC: ${COMPANY.eik} | VAT registration: ${COMPANY.vat} | ${COMPANY.domain}</p>
+        <p>© ${new Date().getFullYear()} ${t.brand}. ${t.footer.rights}</p>
+        <p>EIK/PIC: ${COMPANY.eik} | VAT: ${COMPANY.vat} | ${COMPANY.domain}</p>
         <p>${MEDICAL_DISCLAIMER[lang]}</p>
       </div>
     </div>
@@ -719,7 +728,24 @@ function renderHome(lang) {
     <section class="signal-strip" aria-label="${t.platform.eyebrow}">
       <div class="signal-strip__viewport">
         <div class="signal-strip__track">
-          ${[
+          ${(lang === "bg" ? [
+            "Дистанционен мониторинг",
+            "Пациентски данни",
+            "ЕКГ",
+            "Клиничен процес",
+            "Ролеви достъп",
+            "Одитируемост",
+            "GDPR",
+            "Медицински екипи",
+            "Дистанционен мониторинг",
+            "Пациентски данни",
+            "ЕКГ",
+            "Клиничен процес",
+            "Ролеви достъп",
+            "Одитируемост",
+            "GDPR",
+            "Медицински екипи"
+          ] : [
             "Remote monitoring",
             "Patient data",
             "ECG",
@@ -736,7 +762,7 @@ function renderHome(lang) {
             "Auditability",
             "GDPR-oriented",
             "Healthcare teams"
-          ].map((item) => `<span>${item}</span>`).join("")}
+          ]).map((item) => `<span>${item}</span>`).join("")}
         </div>
       </div>
     </section>
@@ -836,7 +862,7 @@ function renderHome(lang) {
           <p>${t.contact.text}</p>
           <div class="contact-actions">
             <a class="button button--primary" href="tel:${COMPANY.phone.replace(/\s+/g, "")}">${t.contact.phone}: ${COMPANY.phone}</a>
-            <a class="button button--ghost" href="#contacts">${t.contact.email}: ${COMPANY.email}</a>
+            <a class="button button--ghost" href="mailto:${COMPANY.email}">${t.contact.email}: ${COMPANY.email}</a>
           </div>
         </article>
 
@@ -859,7 +885,7 @@ function renderHome(lang) {
           </article>
           <article class="contact-card panel" data-reveal="up">
             <span class="contact-card__label">${t.contact.email}</span>
-            <span>${COMPANY.email}</span>
+            <a href="mailto:${COMPANY.email}">${COMPANY.email}</a>
           </article>
         </div>
       </div>
